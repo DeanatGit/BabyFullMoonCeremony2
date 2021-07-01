@@ -59,20 +59,24 @@
                 //         alert(res.status);
                 //     });
                 console.log(this.name);
-                axios.defaults.headers.post['Content-Type'] = 'application/json;charset=utf-8';
-                axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+                // axios.defaults.headers.post['Content-Type'] = 'application/json;charset=utf-8';
+                // axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+                var obj = {
+                    name: this.name,
+                    phone: this.phone,
+                    address: this.address,
+                    qty: this.qty,
+                    isVeg: this.isVeg,
+                    remark: this.remark,
+                    date: this.nowDateTime
+                }
+                axios.defaults.headers.post['Content-Type'] = 'text/plain';
+
                 axios.get('https://script.google.com/macros/s/AKfycbwWhI2qKOc3npJw2Ha04ikJmmPtui4-6uRLUnkjjVejxSSeaqHI/exec',
                     // this.input 也就是我們要更新上url的資料
                     // {name,email}
-                    {
-                        name: this.name,
-                        phone: this.phone,
-                        address: this.address,
-                        qty: this.qty,
-                        isVeg: this.isVeg,
-                        remark: this.remark,
-                        date: this.nowDateTime
-                    }
+                    JSON.stringify(obj)
+
                 )
                     .then((res) => {
                         console.log(res.data);
