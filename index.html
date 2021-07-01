@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="images/favicon.ico" rel="shortcut icon">
+    <meta charset="UTF-8">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.0.2/vue.global.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.js"></script>
+</head>
+
+<body>
+    <h1>典文油飯調查</h1>
+    <div id="app">
+        <!-- <form action=""> -->
+        <label for="name">姓名</label>
+        <input type="text" name="name" id="name" v-model="name">
+        <br>
+        <label for="phone">手機</label>
+        <input type="tel" name="phone" id="phone" v-model="phone">
+        <br>
+        <label for="address">住址</label>
+        <input type="text" name="address" id="address" v-model="address">
+        <br>
+        <label for="qty">數量</label>
+        <input type="number" name="qty" id="qty" v-model="qty">
+        <br>
+        <label for="isVeg">素食</label>
+        <input type="checkbox" name="isVeg" id="isVeg" v-model="isVeg">
+        <br>
+        <label for="remark">remark</label>
+        <textarea name="remark" id="remark" v-model="Remark"></textarea>
+        <br>
+        <button type="submit" id="send" @click.prevent="addToForm">送出</button>
+        <!-- </form> -->
+    </div>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+</body>
+<script>
+    const App = {
+        data() {
+            return {
+                // user choice data
+                name: '',
+                qty: 0,
+                address: '',
+                phone: '',
+                isVeg: false,
+                Remark: '',
+                nowDateTime: (function () { var Today = new Date(); return Today.getFullYear() + " 年 " + (Today.getMonth() + 1) + " 月 " + Today.getDate() + " 日 " + Today.getHours() + " 點 " + Today.getMinutes() + " 分 " + Today.getSeconds() + " 秒" })()
+            }
+        },
+        methods: {
+            addToForm() {
+                // this.$http.post('https://script.google.com/macros/s/AKfycbwNJ20RTPv2tu7sCG4R_TsfOb5z8PjbJZr8KAsjUSEjQ1pb4vNronP40CSaVSASgCCl/exec',
+                //     { name: "典文油飯調查" }, { emulateJSON: true }).then(function (res) {
+                //         alert(res.body);
+                //     }, function (res) {
+                //         alert(res.status);
+                //     });
+                console.log(this.name);
+                axios.defaults.headers.post['Content-Type'] = 'application/json;charset=utf-8';
+                axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+                axios.get('https://script.google.com/macros/library/d/1wsL691x0u2x8_onR08KFTJAfXz68GKLX5jKf8glrxLP6-sUlyjK8xUw-/1',
+                    // this.input 也就是我們要更新上url的資料
+                    // {name,email}
+                    {
+                        name: this.name,
+                        phone: this.phone,
+                        address: this.address,
+                        qty: this.qty,
+                        isVeg: this.isVeg,
+                        remark: this.remark,
+                        date: this.nowDateTime
+                    }
+                )
+                    .then((res) => {
+                        console.log(res.data);
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                    });
+                // var vm = new Vue({
+                //     el: '#send',
+                //     data: {
+                //         name: this.name,
+                //         phone: this.phone,
+                //         address: this.address,
+                //         qty: this.qty,
+                //         isVeg: this.isVeg,
+                //         remark: this.remark,
+                //         date: this.nowDateTime
+                //     },
+                //     methods: {
+                //         post: function () {
+                //             //發送 post 請求
+                //             this.$http.post('https://script.google.com/macros/s/AKfycbwNJ20RTPv2tu7sCG4R_TsfOb5z8PjbJZr8KAsjUSEjQ1pb4vNronP40CSaVSASgCCl/exec',
+                //                 { name: "典文油飯調查" }, { emulateJSON: true }).then(function (res) {
+                //                     alert(res.body);
+                //                 }, function (res) {
+                //                     alert(res.status);
+                //                 });
+                //         }
+                //     }
+                // });
+            }
+        }
+    };
+
+    Vue.createApp(App).mount('#app');
+</script>
+<!-- 🙇🙇練習結束🙇🙇 -->
+
+</html>
